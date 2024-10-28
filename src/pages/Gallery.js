@@ -15,11 +15,11 @@ export default function Gallery() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingDot, setIsLoadingDot] = useState(false);
-  const loaders = [...Array(5)].map((_, index) => <SkeletonLoader key={index} />);
+  const loaders = [...Array(10)].map((_, index) => <SkeletonLoader key={index} />);
 
   const fetchPhotos = useCallback(async () => {
     const response = await getListPhotos({ page });
-    const newPhotos = response.filter(photo => !photoIds.has(photo.id));
+    const newPhotos = response?.filter(photo => !photoIds.has(photo.id));
     if (response.length < 20) {
       setHasMorePhotos(false);
     }
@@ -89,7 +89,7 @@ export default function Gallery() {
 
 const GalleryWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 40px;
   padding: 16px;
   margin: 20px 20px 0 20px;

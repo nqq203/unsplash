@@ -38,7 +38,7 @@ export default function PhotoDetail() {
   }
 
   if (loading) {
-    return <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", width: "auto", height: "90vh", alignItems: "center"}}>
+    return <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", width: "auto", height: "90vh", alignItems: "center" }}>
       <ThreeDots color="black" height={80} width={80} />
     </div>
   }
@@ -91,17 +91,6 @@ const Card = styled.div`
 const CardHeader = styled.div`
   flex: 1;
   overflow: hidden;  // Ensure images scale properly
-
-  img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;  // Maintain aspect ratio
-    transition: transform 0.3s ease-in-out;
-
-    &:hover {
-      transform: scale(1.03);  // Subtle zoom effect on hover
-    }
-  }
 `;
 
 const Image = styled.img`
@@ -109,6 +98,15 @@ const Image = styled.img`
   height: auto;
   border-radius: 10px;
   cursor: pointer;
+  z-index: 100;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.03);
+  }
 `;
 
 const CardBody = styled.div`
