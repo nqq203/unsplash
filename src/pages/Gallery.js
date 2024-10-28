@@ -18,13 +18,24 @@ export default function Gallery() {
   const loaders = [...Array(10)].map((_, index) => <SkeletonLoader key={index} />);
 
   const fetchPhotos = useCallback(async () => {
-    const response = await getListPhotos({ page });
-    const newPhotos = response?.filter(photo => !photoIds.has(photo.id));
-    if (response.length < 20) {
-      setHasMorePhotos(false);
+    try {
+      const response = await getListPhotos({ page });
+      if (response) {
+        const newPhotos = response?.filter(photo => !photoIds.has(photo.id));
+        if (response.length < 20) {
+          setHasMorePhotos(false);
+        }
+        setPhotos(prevPhotos => [...prevPhotos, ...newPhotos]);
+        setPhotoIds(new Set([...photoIds, ...newPhotos.map(photo => photo.id)]));
+      } else {
+        setHasMorePhotos(false);
+        alert('No data returned from API');
+      }
+    } catch (err) {
+      if (err.response?.status === 403) {
+        alert('Rate limit exceeded. Please try again later.');
+      }
     }
-    setPhotos(prevPhotos => [...prevPhotos, ...newPhotos]);
-    setPhotoIds(new Set([...photoIds, ...newPhotos.map(photo => photo.id)]));
   }, [page]);
 
   useEffect(() => {
@@ -76,7 +87,7 @@ export default function Gallery() {
         {isFetching && loaders}
         {isLoading && loaders}
       </GalleryWrapper>
-      {isFetching && <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", width: "auto", alignItems: "center"}}>
+      {isFetching && <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", width: "auto", alignItems: "center" }}>
         <ThreeDots
           height="80"
           width="80"
