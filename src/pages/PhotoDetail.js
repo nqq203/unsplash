@@ -82,7 +82,7 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media (min-width: 800px) {  // Tablet and desktop
+  @media (min-width: 1000px) {  // Tablet and desktop
     flex-direction: row;
     max-width: calc(100% - 400px);
   }
